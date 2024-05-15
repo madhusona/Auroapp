@@ -1,0 +1,129 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "RS-.#####",
+ "creation": "2024-05-15 09:59:41.308045",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "first_name",
+  "surname",
+  "auroville_name",
+  "column_break_moya",
+  "profile_photo",
+  "section_break_xoru",
+  "status",
+  "column_break_dmvu",
+  "auroville_address",
+  "section_break_enca",
+  "auroville_email_id",
+  "email_id",
+  "other_email_id",
+  "column_break_bwke",
+  "phone_number_i",
+  "phone_number_ii"
+ ],
+ "fields": [
+  {
+   "fieldname": "first_name",
+   "fieldtype": "Data",
+   "label": "First Name"
+  },
+  {
+   "fieldname": "surname",
+   "fieldtype": "Data",
+   "label": "Surname"
+  },
+  {
+   "fieldname": "auroville_name",
+   "fieldtype": "Data",
+   "label": "Auroville Name"
+  },
+  {
+   "fieldname": "column_break_moya",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "profile_photo",
+   "fieldtype": "Attach Image",
+   "label": "Profile Photo"
+  },
+  {
+   "fieldname": "section_break_xoru",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Data",
+   "label": "Status"
+  },
+  {
+   "fieldname": "column_break_dmvu",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auroville_address",
+   "fieldtype": "Data",
+   "label": "Auroville Address"
+  },
+  {
+   "fieldname": "section_break_enca",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "auroville_email_id",
+   "fieldtype": "Data",
+   "label": "Auroville Email ID"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID "
+  },
+  {
+   "fieldname": "other_email_id",
+   "fieldtype": "Data",
+   "label": "Other Email ID "
+  },
+  {
+   "fieldname": "column_break_bwke",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "phone_number_i",
+   "fieldtype": "Data",
+   "label": "Phone Number I"
+  },
+  {
+   "fieldname": "phone_number_ii",
+   "fieldtype": "Data",
+   "label": "Phone Number II"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-05-15 11:31:01.765397",
+ "modified_by": "Administrator",
+ "module": "Auroapp",
+ "name": "Directory",
+ "naming_rule": "Autoincrement",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

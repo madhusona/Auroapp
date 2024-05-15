@@ -1,0 +1,257 @@
+{% extends "templates/web.html" %}
+
+{% block title %}Auroville Directory{% endblock %}
+
+{% block content %}
+
+<style>
+
+body{
+background: #eff3f6;
+
+}
+.thumb-lg {
+height: 88px;
+width: 88px;
+}
+.card {
+border: none;
+box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.05);
+}
+.m-b-30 {
+margin-bottom: 30px;
+}
+.social-links li a {
+-webkit-border-radius: 50%;
+background: #fcfdfd;
+border-radius: 50%;
+color: #9f9f9f;
+display: inline-block;
+height: 30px;
+line-height: 30px;
+text-align: center;
+width: 30px;
+}
+
+.select-wrap {
+        position: relative;
+    }
+    .dropdown-caret {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+        pointer-events: none;
+    }
+    
+    .search-section {
+        background-image: url("/files/download.svg");
+        background-size: 75%;
+        /* Set background-size to contain */
+        background-repeat: no-repeat;
+        /* Prevent the image from repeating */
+        background-position: center center;
+        /* Center the background image */
+        padding: 100px;
+    }
+
+    .result-section {
+
+
+        background-image: url("/files/m2.svg");
+        background-size: cover;
+        /* Cover the entire width of the container */
+        background-repeat: no-repeat;
+        background-position: center center;
+
+    }
+
+    .car {
+        -webkit-box-shadow: 3.5px 3px 7.5px 4.5px #dddddd;
+        -moz-box-shadow: 3.5px 3px 7.5px 4.5px #dddddd;
+        box-shadow: 3.5px 3px 7.5px 4.5px #dddddd;
+
+
+    }
+
+    .custom-btn {
+        background-color: #009473;
+        /* Set the background color */
+        color: #ffffff;
+        /* Set the text color */
+        border-color: #009473;
+        /* Set the border color (optional) */
+    }
+</style>
+<script>
+    window.addEventListener('load', function() {
+        // Get the input element by its ID
+        var searchInput = document.getElementById('search-name');
+        
+        // Clear the input field's value
+        searchInput.value = '';
+    });
+</script>
+<div class="site-section">
+    <div class="container">
+        <div class="row pt-8 pb-10">
+            <form class="form-search col-12">
+                <div class="row  align-items-end">
+                    <!--
+                    <div class="col-sm-3 pt-2">
+                        
+                        <label for="search-by">Search By</label>
+                        <div class="select-wrap">
+                            
+                            <select name="search_by" id="search-by" class="form-control d-block rounded-0">
+                                <option value="firstname" {% if search_by == "firstname" %}selected{% endif %}>First Name <span class="dropdown-caret">&#9660;</span></option>
+                                <option value="surname" {% if search_by == "surname" %}selected{% endif %}>Surname</option>
+                                <option value="aurname" {% if search_by == "aurname" %}selected{% endif %}>Auroville Name</option>
+                                
+                            </select>
+                            
+
+                        </div>
+                        <input value="{{ search_name if search_name is defined else '' }}" type="text" name="search_name" id="search-name" class="form-control d-block rounded-0" placeholder="Enter">
+
+
+                    </div>
+                   
+-->
+                    <div class="col-sm-3 pt-2">
+                   <!--   <label for="search-by">Search By</label>-->  
+                        <div class="select-wrap">
+                            <div class="position-relative">
+                                <select name="search_by" id="search-by" class="form-control d-block rounded-0">
+                                    <option value="firstname" {% if search_by == "firstname" %}selected{% endif %}>First Name</option>
+                                    <option value="surname" {% if search_by == "surname" %}selected{% endif %}>Surname</option>
+                                    <option value="aurname" {% if search_by == "aurname" %}selected{% endif %}>Auroville Name</option>
+                                </select>
+                                <div class="dropdown-caret">&#9660;</div>
+                            </div>
+                        </div>
+                        <input value="{{ search_name if search_name is defined else '' }}" type="text" name="search_name" id="search-name" class="form-control d-block rounded-0" placeholder="Enter the Name">
+                    </div>
+                    <div class="col-sm-3  pt-2">
+                        <label for="list-types">Category</label>
+                        <div class="select-wrap">
+                          
+                            <select name="status" id="list-types" class="form-control d-block rounded-0">
+                                <option value="" {% if not category_selected %}selected{% endif %}>Select an option
+                                </option>
+                                {% for category in categories %}
+
+                                <option value="{{category.status}}" {% if category.status==category_selected %}selected{%
+                                    endif %}>
+                                    {{category.status}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 pt-2">
+                        <label for="list-types">Address</label>
+                        <div class="select-wrap">
+                           
+                            <select name="auroville_address" id="list-types" class="form-control d-block rounded-0">
+                                <option value="" {% if not type_selected %}selected{% endif %}>Select an option</option>
+                                {% for type in address %}
+                                <option value="{{type.auroville_address}}" {% if type.auroville_address==type_selected %}selected{% endif
+                                    %}>
+                                    {{type.auroville_address}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3 pt-5">
+                        <input type="submit" class="btn btn-success text-white btn-block rounded-0 custom-btn"
+                            value="Search">
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+    </div>
+</div>
+
+<div class="container-fluid">
+<div class="row">
+    {% for record in records %}
+   <!-- <div class="col-lg-4">
+        <div class="card m-b-30">
+            <div class="card-body">
+                <div class="media">
+                    <img class="d-flex mr-3 rounded-circle img-thumbnail thumb-lg" src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="Generic placeholder image" />
+                    <div class="media-body">
+                        <h5 class="mt-0 font-18 mb-1">{{ record.first_name }} {{ record.surname }}</h5>
+                        <p class="text-muted font-14">{{ record.status }}</p>
+                        <p class="font-12">Auroville Name: {{ record.auroville_name }}</p>
+                        <p class="font-12">Auroville Address: {{ record.auroville_address }}</p>
+                        <ul class="social-links list-inline mb-0">
+                            <li class="list-inline-item">
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="1234567890"><i class="fa fa-phone"></i></a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="" data-original-title="@skypename"><i class="fa fa-skype"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ record.first_name }} {{ record.surname }}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">{{ record.status }}</h6>
+                <p class="card-text">Auroville Name: {{ record.auroville_name }}<br>
+                    Auroville Address: {{ record.auroville_address }}
+                </p>
+                
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+</div>
+<div class="container-fluid">
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+      <li class="page-item {% if current_page | int == 1 %}disabled{% endif %}">
+        <a class="page-link" href="/directory?page={{ current_page | int - 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ status | default('') }}&auroville_address={{ type_selected | default('') }}" tabindex="-1">Previous</a>
+      </li>
+  
+      {% if current_page | int > 4 %}
+        <li class="page-item"><a class="page-link" href="#">1</a></li>
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+      {% endif %}
+  
+      {% for page_number in range(max(1, current_page | int - 3), min(current_page | int + 3, total_pages) + 1) %}
+        <li class="page-item {% if page_number == current_page | int %}active{% endif %}">
+          <a class="page-link" href="/directory?page={{ page_number }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ status | default('') }}&auroville_address={{ type_selected | default('') }}">{{ page_number }}</a>
+        </li>
+      {% endfor %}
+  
+      {% if current_page | int < total_pages - 3 %}
+        <li class="page-item disabled"><span class="page-link">...</span></li>
+        <li class="page-item"><a class="page-link" href="/directory?page={{ total_pages }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ status | default('') }}&auroville_address={{ type_selected | default('') }}">{{ total_pages }}</a></li>
+      {% endif %}
+  
+      <li class="page-item {% if current_page | int == total_pages %}disabled{% endif %}">
+        <a class="page-link" href="/directory?page={{ current_page | int + 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ status | default('') }}&auroville_address={{ type_selected | default('') }}">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+  
+  
+{% endblock %}

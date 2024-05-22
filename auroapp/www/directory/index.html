@@ -86,12 +86,43 @@
         border-color: #009473;
         /* Set the border color (optional) */
     }
+
+    .image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.image-container img {
+    display: block;
+    width: 100%; /* Ensure the image fits within its container */
+}
+img {
+    pointer-events: none;
+}
+/*
+.watermark {
+    position: absolute;
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%, -50%); 
+    font-size: 20px; 
+    color: rgba(255, 255, 255, 0.7); 
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 5px; 
+    border-radius: 5px; 
+    pointer-events: none;
+}*/
+    .rounded-corners {
+        border-radius: 15px; /* Adjust the value to control the rounding of the corners */
+    }
     @media only screen and (max-width: 768px) { /* Adjust the max-width as needed for your breakpoints */
     img.fixed-size {
         width: 200px;
         height: 200px;
       
     }
+
+    
 }
 </style>
 
@@ -172,7 +203,7 @@
 <div class="container-fluid">
 
     {% if records %}
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center pt-2">
         <div class="alert alert-warning text-center" role="alert">
             For update contact Auroville Residents Service.
         </div>
@@ -182,12 +213,16 @@
         <div class="col-md-4 mb-2">
             <div class="card">
                 <div class="row no-gutters">
+                   
                     <div class="col-md-4 d-flex align-items-center justify-content-center">
-                        {% if record.profile_photo %}
-                        <img class="img-fluid p-2 fixed-size" src="{{ record.profile_photo }}" alt="Profile Image">
-                        {% else %}
-                        <img class="img-fluid p-2 fixed-size" src="/files/auroville.png" alt="Default Profile Image">
-                        {% endif %}
+                        <div class="image-container position-relative">
+                            {% if record.profile_photo %}
+                            <img class="img-fluid rounded-corners p-2 fixed-size" src="{{ record.profile_photo }}" alt="Profile Image">
+                            {% else %}
+                            <img class="img-fluid rounded-corners p-2 fixed-size" src="/files/auroville.png" alt="Default Profile Image">
+                            {% endif %}
+                           <!-- <div class="watermark">Watermark</div>-->
+                        </div>
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
@@ -288,7 +323,7 @@
         </nav>
     </div>
     {% else %}
-    <div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center pt-2">
         <div class="alert alert-danger text-center" role="alert">
             No Records Found.
         </div>

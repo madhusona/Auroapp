@@ -5,7 +5,7 @@
 {% block content %}
 
 <style>
-    body {
+    .back {
         background: #eff3f6;
 
     }
@@ -86,9 +86,16 @@
         border-color: #009473;
         /* Set the border color (optional) */
     }
+    @media only screen and (max-width: 768px) { /* Adjust the max-width as needed for your breakpoints */
+    img.fixed-size {
+        width: 200px;
+        height: 200px;
+      
+    }
+}
 </style>
 
-<div class="site-section">
+<div class="site-section back">
     <div class="container">
         <div class="row pt-8 pb-10">
             <form class="form-search col-12">
@@ -177,7 +184,9 @@
                 <div class="row no-gutters">
                     <div class="col-md-4 d-flex align-items-center justify-content-center">
                         {% if record.profile_photo %}
-                        <img class="img-fluid p-2" src="{{ record.profile_photo }}" alt="Profile Image">
+                        <img class="img-fluid p-2 fixed-size" src="{{ record.profile_photo }}" alt="Profile Image">
+                        {% else %}
+                        <img class="img-fluid p-2 fixed-size" src="/files/auroville.png" alt="Default Profile Image">
                         {% endif %}
                     </div>
                     <div class="col-md-8">
@@ -240,7 +249,7 @@
             For update contact Auroville Residents Service.
         </div>
     </div>
-    
+
     <div class="container-fluid">
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">

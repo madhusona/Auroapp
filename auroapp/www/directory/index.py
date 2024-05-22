@@ -47,7 +47,7 @@ def get_context(context):
 
     if search_name:
         context.search_name = search_name
-        
+
     print(context.search_name)
     # Pagination
     page_length = 9  # Number of records per page
@@ -128,7 +128,7 @@ def get_context(context):
             "auroville_address", "profile_photo", "auroville_email_id",
             "email_id", "other_email_id", "phone_number_ii", "phone_number_i"
         ],
-        order_by="",
+        order_by="first_name ASC",
         group_by=None,
         start=start,
         page_length=page_length

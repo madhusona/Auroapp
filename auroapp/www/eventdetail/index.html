@@ -1,0 +1,28 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+    }
+    .event-detail {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .event-detail h2 {
+        margin-top: 0;
+    }
+    .event-detail p {
+        margin: 10px 0;
+    }
+</style>
+
+<div class="event-detail">
+    <h2>{{ event.subject }}</h2>
+    <p><strong>Date:</strong> {{ event.starts_on }}</p>
+    <p>{{ event.description }}</p>
+</div>
+{% endblock %}

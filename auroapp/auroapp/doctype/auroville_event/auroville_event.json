@@ -68,6 +68,7 @@
    "options": "Event\nMeeting\nCall\nSent/Received Email\nOther"
   },
   {
+   "default": "Public",
    "fieldname": "event_type",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -75,19 +76,21 @@
    "label": "Event Type",
    "oldfieldname": "event_type",
    "oldfieldtype": "Select",
-   "options": "Private\nPublic",
+   "options": "Public\nPrivate",
    "reqd": 1,
    "search_index": 1
   },
   {
    "fieldname": "color",
    "fieldtype": "Color",
+   "hidden": 1,
    "label": "Color"
   },
   {
    "default": "1",
    "fieldname": "send_reminder",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Send an email reminder in the morning"
   },
   {
@@ -112,13 +115,13 @@
    "label": "Ends on"
   },
   {
-   "default": "Open",
+   "default": "Verification Pending",
    "fieldname": "status",
    "fieldtype": "Select",
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Status",
-   "options": "Open\nCompleted\nClosed\nCancelled"
+   "options": "Verification Pending\nOpen\nCompleted\nClosed\nCancelled"
   },
   {
    "fieldname": "sender",
@@ -131,12 +134,14 @@
    "default": "0",
    "fieldname": "all_day",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "All Day"
   },
   {
    "default": "0",
    "fieldname": "sync_with_google_calendar",
    "fieldtype": "Check",
+   "hidden": 1,
    "label": "Sync with Google Calendar"
   },
   {
@@ -282,6 +287,7 @@
   {
    "fieldname": "participants",
    "fieldtype": "Section Break",
+   "hidden": 1,
    "label": "Participants",
    "oldfieldtype": "Section Break"
   },
@@ -294,10 +300,10 @@
  ],
  "icon": "fa fa-calendar",
  "links": [],
- "modified": "2024-06-05 10:53:11.193433",
+ "modified": "2024-06-05 11:08:53.729689",
  "modified_by": "Administrator",
  "module": "Auroapp",
- "name": "Auroville Event1",
+ "name": "Auroville Event",
  "naming_rule": "Expression (old style)",
  "owner": "Administrator",
  "permissions": [

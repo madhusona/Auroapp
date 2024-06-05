@@ -5,5 +5,5 @@
 from frappe.tests.utils import FrappeTestCase
 
 
-class TestAurovilleEvent1(FrappeTestCase):
+class TestAurovilleEvent(FrappeTestCase):
 	pass

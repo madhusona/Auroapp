@@ -1,6 +1,6 @@
 {% extends "templates/web.html" %}
 
-{% block title %}Auroville Directory{% endblock %}
+{% block title %}Auroville Unit Directory{% endblock %}
 
 {% block page_content %}
 
@@ -131,8 +131,8 @@
 </style>
 
 <div class="d-flex justify-content-between align-items-center">
-    Auroville People Directory
-     <a href="/unit" class="btn btn-link unitlink">Search Unit Directory</a>
+    Auroville Unit Directory
+     <a href="/directory" class="btn btn-link unitlink">Search Auroville People Directory</a>
  </div>
 
 <div class="site-section back">
@@ -148,12 +148,8 @@
                         <div class="select-wrap">
                             <div class="position-relative">
                                 <select name="search_by" id="search-by" class="form-control d-block rounded-0">
-                                    <option value="firstname" {% if search_by=="firstname" %}selected{% endif %}>First
-                                        Name</option>
-                                    <option value="surname" {% if search_by=="surname" %}selected{% endif %}>Surname
-                                    </option>
-                                    <option value="auroville_name" {% if search_by=="auroville_name" %}selected{% endif
-                                        %}>Auroville Name</option>
+                                    <option value="firstname" {% if search_by=="firstname" %}selected{% endif %}>Unit
+                                        Name</option>                                  
                                     <option value="email_id" {% if search_by=="email_id" %}selected{% endif %}>Email
                                     </option>
                                     <option value="mobile_id" {% if search_by=="mobile_id" %}selected{% endif %}>Mobile
@@ -167,7 +163,7 @@
                             placeholder="Enter the Name">
                     </div>
                     <div class="col-sm-3  pt-2">
-                        <label for="list-types">Category</label>
+                        <label for="list-types">Type</label>
                         <div class="select-wrap">
 
                             <select name="status" id="list-types" class="form-control d-block rounded-0">
@@ -175,23 +171,23 @@
                                 </option>
                                 {% for category in categories %}
 
-                                <option value="{{category.status}}" {% if category.status==category_selected
+                                <option value="{{category.type}}" {% if category.type==category_selected
                                     %}selected{% endif %}>
-                                    {{category.status}}</option>
+                                    {{category.type}}</option>
                                 {% endfor %}
                             </select>
                         </div>
                     </div>
                     <div class="col-sm-3 pt-2">
-                        <label for="list-types">Address</label>
+                        <label for="list-types">Trust</label>
                         <div class="select-wrap">
 
                             <select name="auroville_address" id="list-types" class="form-control d-block rounded-0">
                                 <option value="" {% if not type_selected %}selected{% endif %}>Select an option</option>
                                 {% for type in address %}
-                                <option value="{{type.auroville_address}}" {% if type.auroville_address==type_selected
+                                <option value="{{type.parent1}}" {% if type.parent1==type_selected
                                     %}selected{% endif %}>
-                                    {{type.auroville_address}}</option>
+                                    {{type.parent1}}</option>
                                 {% endfor %}
                             </select>
                         </div>
@@ -214,7 +210,7 @@
     {% if records %}
     <div class="d-flex justify-content-center pt-2">
         <div class="alert alert-warning text-center" role="alert">
-            For update contact Auroville Residents Service.
+            For update contact FAMC.
         </div>
     </div>
     <div class="row">
@@ -223,25 +219,14 @@
             <div class="card">
                 <div class="row no-gutters">
 
-                    <div class="col-md-4 d-flex align-items-center justify-content-center">
-                        <div class="image-container position-relative">
-                            {% if record.profile_photo %}
-                            <img class="img-fluid rounded-corners p-2 fixed-size" src="{{ record.profile_photo }}"
-                                alt="Profile Image">
-                            {% else %}
-                            <img class="img-fluid rounded-corners p-2 fixed-size" src="/files/auroville.png"
-                                alt="Default Profile Image">
-                            {% endif %}
-                            <!-- <div class="watermark">Watermark</div>-->
-                        </div>
-                    </div>
-                    <div class="col-md-8">
+            
+                    <div class="col-md-12">
                         <div class="card-body">
-                            <h5 class="card-title">{{ record.first_name }} {{ record.surname }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ record.status }}</h6>
+                            <h5 class="card-title">{{ record.name1 }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ record.parent1 }}</h6>
                             <p class="card-text">
                             <div class="d-flex justify-content-between">
-                                <span>{{ record.auroville_name }}</span>
+                                <span>{{ record.type }}</span>
                                 <span>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="24" height="24"
                                         id="address">
@@ -261,27 +246,19 @@
                                         <circle cx="47.5" cy="14.68" r="4.28" fill="none" stroke="#37a849"
                                             stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
                                     </svg>
-                                    {{ record.auroville_address }}
+                                    {{ record.communtiy }}
                                 </span>
                             </div>
-                            <br>
+                            <br><hr>
+                            <center><strong>Executives</strong><br></center> 
                             <b>Email:</b>
-                            {% if record.auroville_email_id %}
-                            {{ record.auroville_email_id }}
-                            {% endif %}
-                            {% if record.email_id %}
-                            {{ record.email_id }}
-                            {% endif %}
-                            {% if record.other_email_id %}
-                            {{ record.other_email_id }}
-                            {% endif %}<br>
+                         
+                            {{ record.email }}<br>
+                           
                             <b>Phone:</b>
-                            {% if record.phone_number_i %}
-                            {{ record.phone_number_i }}
-                            {% endif %}
-                            {% if record.phone_number_ii %}
-                            {{ record.phone_number_ii }}
-                            {% endif %}
+                           
+                            {{ record.phone }}
+                           
                             </p>
                         </div>
                     </div>
@@ -292,7 +269,7 @@
     </div>
     <div class="d-flex justify-content-center">
         <div class="alert alert-warning text-center" role="alert">
-            For update contact Auroville Residents Service.
+            For update contact FAMC.
         </div>
     </div>
 
@@ -301,7 +278,7 @@
             <ul class="pagination justify-content-center">
                 <li class="page-item {% if current_page | int == 1 %}disabled{% endif %}">
                     <a class="page-link"
-                        href="/directory?page={{ current_page | int - 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}"
+                        href="/unit?page={{ current_page | int - 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}"
                         tabindex="-1">Previous</a>
                 </li>
 
@@ -314,7 +291,7 @@
                 1) %}
                 <li class="page-item {% if page_number == current_page | int %}active{% endif %}">
                     <a class="page-link"
-                        href="/directory?page={{ page_number }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">{{
+                        href="/unit?page={{ page_number }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">{{
                         page_number }}</a>
                 </li>
                 {% endfor %}
@@ -322,13 +299,13 @@
                 {% if current_page | int < total_pages - 3 %} <li class="page-item disabled"><span
                         class="page-link">...</span></li>
                     <li class="page-item"><a class="page-link"
-                            href="/directory?page={{ total_pages }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">{{
+                            href="/unit?page={{ total_pages }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">{{
                             total_pages }}</a></li>
                     {% endif %}
 
                     <li class="page-item {% if current_page | int == total_pages %}disabled{% endif %}">
                         <a class="page-link"
-                            href="/directory?page={{ current_page | int + 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">Next</a>
+                            href="/unit?page={{ current_page | int + 1 }}&search_by={{ search_by | default('') }}&search_name={{ search_name | default('') }}&status={{ category_selected | default('') }}&auroville_address={{ type_selected | default('') }}">Next</a>
                     </li>
             </ul>
         </nav>

@@ -1,0 +1,165 @@
+{% extends "templates/web.html" %}
+{% block page_content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tui-calendar/1.15.1/tui-calendar.min.css" />
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+    #controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+    }
+    #controls .left, #controls .right {
+        display: flex;
+        align-items: center;
+    }
+    #controls .left button, #controls .right button {
+        margin: 0 5px;
+    }
+    #event-cards {
+        padding: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .event-card {
+        background-color: #ffffff;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        width: calc(33.333% - 20px);
+        box-sizing: border-box;
+    }
+    .event-card h4 {
+        margin: 0 0 10px;
+    }
+    .event-card p {
+        margin: 0;
+    }
+</style>
+
+<div id="controls">
+    <div class="left">
+        <button id="prev-button">&lt;</button>
+        <span id="current-period">Month Year</span>
+        <button id="next-button">&gt;</button>
+    </div>
+    <div class="right">
+        <button id="today-button">Today</button>
+        <button id="week-button">Week</button>
+        <button id="month-button">Month</button>
+    </div>
+</div>
+
+<div id="event-cards"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tui-code-snippet/1.5.2/tui-code-snippet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tui-dom/3.0.3/tui-dom.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tui-time-picker/2.3.2/tui-time-picker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tui-date-picker/4.1.0/tui-date-picker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tui-calendar/1.15.1/tui-calendar.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendar = new tui.Calendar(document.createElement('div'), { // hidden calendar instance for date manipulation
+            defaultView: 'month'
+        });
+
+        var currentView = 'month';
+
+        function updateCurrentPeriod() {
+            var currentDate = calendar.getDate().toDate();
+            var start = calendar.getDateRangeStart().toDate();
+            var end = calendar.getDateRangeEnd().toDate();
+            var options = { year: 'numeric', month: 'long' };
+
+            if (currentView === 'month') {
+                document.getElementById('current-period').innerText = currentDate.toLocaleDateString(undefined, options);
+            } else if (currentView === 'week') {
+                options = { year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('current-period').innerText = start.toLocaleDateString(undefined, options) + ' - ' + end.toLocaleDateString(undefined, options);
+            } else if (currentView === 'day') {
+                options = { year: 'numeric', month: 'long', day: 'numeric' };
+                document.getElementById('current-period').innerText = currentDate.toLocaleDateString(undefined, options);
+            }
+        }
+
+        function fetchEvents(start, end) {
+            frappe.call({
+                method: 'frappe.desk.doctype.event.event.get_events',
+                args: {
+                    start: start.toISOString(),
+                    end: end.toISOString()
+                },
+                callback: function(response) {
+                    if (response.message) {
+                        const events = response.message;
+                        displayEvents(events);
+                    }
+                }
+            });
+        }
+
+        function displayEvents(events) {
+            var eventCards = document.getElementById('event-cards');
+            eventCards.innerHTML = '';
+            events.forEach(event => {
+                var card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = `
+                    <h4>${event.subject}</h4>
+                    <p>${new Date(event.starts_on).toLocaleString()}</p>
+                    <p>${event.description || ''}</p>
+                `;
+                eventCards.appendChild(card);
+            });
+        }
+
+        document.getElementById('today-button').addEventListener('click', function() {
+            currentView = 'day';
+            var today = new Date();
+            calendar.setDate(today);
+            calendar.changeView('day', true);
+            updateCurrentPeriod();
+            fetchEvents(today, today);
+        });
+
+        document.getElementById('week-button').addEventListener('click', function() {
+            currentView = 'week';
+            calendar.changeView('week', true);
+            updateCurrentPeriod();
+            fetchEvents(calendar.getDateRangeStart().toDate(), calendar.getDateRangeEnd().toDate());
+        });
+
+        document.getElementById('month-button').addEventListener('click', function() {
+            currentView = 'month';
+            calendar.changeView('month', true);
+            updateCurrentPeriod();
+            fetchEvents(calendar.getDateRangeStart().toDate(), calendar.getDateRangeEnd().toDate());
+        });
+
+        document.getElementById('prev-button').addEventListener('click', function() {
+            calendar.prev();
+            updateCurrentPeriod();
+            fetchEvents(calendar.getDateRangeStart().toDate(), calendar.getDateRangeEnd().toDate());
+        });
+
+        document.getElementById('next-button').addEventListener('click', function() {
+            calendar.next();
+            updateCurrentPeriod();
+            fetchEvents(calendar.getDateRangeStart().toDate(), calendar.getDateRangeEnd().toDate());
+        });
+
+        // Initialize with current month events
+        updateCurrentPeriod();
+        fetchEvents(calendar.getDateRangeStart().toDate(), calendar.getDateRangeEnd().toDate());
+    });
+</script>
+{% endblock %}
